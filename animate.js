@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     var animals = [];  //array set up for buttons
-    var clickedAnimal;  //variable for setting up ajax request
+    var clickedAnimal= '';  //variable for setting up ajax request
 
     // --------function that dynamically renders buttons with data to the document -----------------
           function renderButtons() {
@@ -12,6 +12,7 @@ $(document).ready(function(){
               var b = $('<button>');
                 b.addClass('animals');
                 b.attr('data-name',animals[i]);
+                b.attr('value',animals[i]);
                 b.text(animals[i]);
     
        //       var button = "<button>"+animals[i]+'</button>';
@@ -49,19 +50,19 @@ $(document).ready(function(){
 
     function displayGifs(){
 
-         clickedAnimal = $(this).attr("data-name");   //name is extracted from button
-         console.log(clickedAnimal);
+      clickedAnimal = $(this).attr('data-name')   //name is extracted from button
+      console.log('you clicked on ',clickedAnimal);
 
- //       event.preventDefault;
+ //       event.preventDefault
 
         console.log("you clicked a button");
 
 
-        // var animalTag = '&tag='+ clickedAnimal;
-        // var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC" + animalTag;
-        // //  console.log(animal, animalTag);
+        var animalTag = '&tag='+ clickedAnimal;
+        var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC" +animalTag  
+         console.log(clickedAnimal, animalTag);
 
-        var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=cats"        
+        //var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=cats"        
 
           $.ajax({        
             url: queryURL,
@@ -74,7 +75,7 @@ $(document).ready(function(){
             var imgURL = response.data.image_original_url;
             var animalImg = $('<img>')
             animalImg.attr("src",imgURL);
-            animalDiv.append(animalImg);
+            animalDiv.prepend(animalImg);
 
             // var released = response.Released;
             // var pTwo = $('<p>').text("Released: " + released);
@@ -88,9 +89,9 @@ $(document).ready(function(){
         
             // var imgURL = response.Poster;
             // var image = $('<img>').attr('src',imgURL);
-            // animalDiv.append(image);
+            // animalDiv.append(ime);
 
-            $('#animal-gifs').append(animalDiv);  //add to front rather than back
+            $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
         
 
 
@@ -99,7 +100,7 @@ $(document).ready(function(){
 
     }   //end of button click event/ function
 
-    $(document).on("click","#animals-view", displayGifs);
+    $(document).on("click",".animals", displayGifs);
     
 
 });      //end of document ready
