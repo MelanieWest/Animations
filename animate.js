@@ -70,12 +70,22 @@ $(document).ready(function(){
           }).done(function(response) {
             console.log(response);      //'response' is all the info the api has on my animal
          
-            var animalDiv = $('<div class="gifs">');
+            var animalDiv = $('<div class="gifs">');  //new div for images
             
-            var imgURL = response.data.image_original_url;
-            var animalImg = $('<img>')
-            animalImg.attr("src",imgURL);
-            animalDiv.prepend(animalImg);
+            var imgURL_moving = response.data.fixed_width_small_url;
+            var animalImg1 = $('<img>')
+            animalImg1.attr("src",imgURL_moving);
+            animalDiv.prepend(animalImg1);  //put into dynamically created div
+
+            $('#animal-gifs').prepend(animalDiv);  //add to front rather than back of hard-coded div
+            
+            var imgURL_still = response.data.fixed_width_small_still_url;
+            var animalImg2 = $('<img>')
+            animalImg2.attr("src",imgURL_still);
+            animalDiv.prepend(animalImg2);
+
+            $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
+            
 
             // var released = response.Released;
             // var pTwo = $('<p>').text("Released: " + released);
@@ -91,8 +101,9 @@ $(document).ready(function(){
             // var image = $('<img>').attr('src',imgURL);
             // animalDiv.append(ime);
 
-            $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
-        
+            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
+            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
+            
 
 
           });       //end of response to ajax request
