@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cute Animal Gifs</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Cute Animal Gifs</h1>
+
+    <!-- Animal buttons will be inserted here -->
+    <div id="animals-view"></div>
+
+    <form id="animal-form">
+      <label for="animal-input">Animal Type</label>
+      <input type="text" id="animal-input">
+      <br>
+
+      <!-- Input looks like a button; it triggers new animal to be added -->
+      <input id="add-animal" type="submit" value="New Animal">
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    //there's no document ready here!!
+      // Initial array of animals
+      var animals = [];
+
+      function renderButtons() {
+
+      $("#animals-view").empty();
+
+      for(var i= 0; i<animals.length; i++){
+          var b = $('<button>');
+            b.addClass('animals');
+            b.attr('data-name',animals[i]);
+            b.text(animals[i]);
+
+   //       var button = "<button>"+movies[i]+'</button>';
+
+          $("#animals-view").append(b);
+
+          console.log(animals[i]);
+        }
+
+      // Function for displaying movie data
+      
+        // Delete the content inside the movies-view div prior to adding new movies
+        // (this is necessary otherwise you will have repeat buttons)
+
+        // Loop through the array of movies, then generate buttons for each movie in the array
+
+      }   //end of render buttons loop
+
+
+
+      // This function handles events where the add movie button is clicked
+      $("#add-animal").on("click", function(event) {
+
+         event.preventDefault() 
+         //prevents submit button from trying to send a form.
+        event.preventDefault();
+        var input = $("#animal-input").val().trim();
+
+        animals.push(input);
+        console.log(animals);
+        $("#animal-input").val(' ');  //empty the box
+
+        // The renderButtons function is called, rendering the list of movie buttons
+        renderButtons();
+      });
+
+    </script>
+  </div>
+</body>
+
+</html>
