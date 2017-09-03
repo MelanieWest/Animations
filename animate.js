@@ -72,47 +72,66 @@ $(document).ready(function(){
          
             var animalDiv = $('<div class="gifs">');  //new div for images
             
-            var imgURL_moving = response.data.fixed_width_small_url;
-            var animalImg1 = $('<img>')
-            animalImg1.attr("src",imgURL_moving);
-            animalDiv.prepend(animalImg1);  //put into dynamically created div
-
-            $('#animal-gifs').prepend(animalDiv);  //add to front rather than back of hard-coded div
-            
             var imgURL_still = response.data.fixed_width_small_still_url;
-            var animalImg2 = $('<img>')
-            animalImg2.attr("src",imgURL_still);
-            animalDiv.prepend(animalImg2);
+            var imgURL_moving = response.data.fixed_width_small_url;
+            
+            var animalImg = $('<img>')
+            animalImg.attr("src",imgURL_still);
+            animalImg.attr("data-state","still");
+            animalImg.attr("data-still",imgURL_still);            
+            animalImg.attr("data-animate",imgURL_moving);
+            animalImg.attr("class","gif");
+            
+            //console.log($(animalImg).html());
+
+            animalDiv.prepend(animalImg);  //put into dynamically created div
+
+            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back of hard-coded div
+            
+            // var imgURL_moving = response.data.fixed_width_small_url;
+            // var animalImg2 = $('<img>')
+            // animalImg2.attr("src",imgURL_still);
+            // animalDiv.prepend(animalImg2);
 
             $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
             
-
-            // var released = response.Released;
-            // var pTwo = $('<p>').text("Released: " + released);
-            // animalDiv.append(pTwo);
-
-        
-            // var plot = response.Plot;
-            // var pThree = $('<p>').text("Plot: " + plot);
-            // animalDiv.append(pThree);
-
-        
-            // var imgURL = response.Poster;
-            // var image = $('<img>').attr('src',imgURL);
-            // animalDiv.append(ime);
-
-            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
-            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
-            
-
-
           });       //end of response to ajax request
-
 
     }   //end of button click event/ function
 
-    $(document).on("click",".animals", displayGifs);
+// -------------begin function to toggle images ----------
+
+function toggleGifs() {
+ 
+ 
+  console.log($(this).data);
+
+  console.log('state', $(this).data('state'));
+
+  var currentState = $(this).data('state');
+  
+  var state = $(this).attr("data-state");
+
+  console.log(state);
+  if ('still'==currentState){   //toggle between states
+    $(this).data('state','moving');
+    $(this).attr('src',$(this).data('animate'));
+}
+  else {
+    $(this).data('state','still');
+    $(this).attr('src',$(this).data('still'));
     
+  } 
+
+};
+
+
+
+// ---end function to toggle images
+//
+$(document).on("click",".animals", displayGifs);
+$(document).on("click",".gif", toggleGifs);
+
 
 });      //end of document ready
 
