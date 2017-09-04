@@ -10,12 +10,11 @@ $(document).ready(function(){
     
           for(var i= 0; i<animals.length; i++){
               var b = $('<button>');
-                b.addClass('animals');
+                b.addClass('btn btn-primary animals');
                 b.attr('data-name',animals[i]);
                 b.attr('value',animals[i]);
                 b.text(animals[i]);
     
-       //       var button = "<button>"+animals[i]+'</button>';
               console.log('button attr ='+$(b).attr('data-name'))
 
               $("#animals-view").append(b);
@@ -53,16 +52,9 @@ $(document).ready(function(){
       clickedAnimal = $(this).attr('data-name')   //name is extracted from button
       console.log('you clicked on ',clickedAnimal);
 
- //       event.preventDefault
-
-        console.log("you clicked a button");
-
-
- //       var animalTag = '&tag='+ clickedAnimal;
-
  //       var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC" + animalTag;  
-         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + clickedAnimal + "&api_key=dc6zaTOxFJmzC&limit=10" ; 
-          console.log(clickedAnimal);
+
+          var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + clickedAnimal + "&api_key=dc6zaTOxFJmzC&limit=10" ; 
 
           $.ajax({        
             url: queryURL,
@@ -84,11 +76,8 @@ $(document).ready(function(){
             animalImg.attr("data-animate",imgURL_moving);
             animalImg.attr("class","gif");
             
-            console.log(i);
-
             animalDiv.prepend(animalImg);  //put into dynamically created div
 
-  
             $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
             }
           });       //end of response to ajax request
@@ -99,16 +88,16 @@ $(document).ready(function(){
 
 function toggleGifs() {
  
- 
+ // I confess I don't understand these next four lines.  I copied
+ // them from the 'pausing gifs' classwork activity.
+
   console.log($(this).data);
-
   console.log('state', $(this).data('state'));
-
-  var currentState = $(this).data('state');
-  
+  var currentState = $(this).data('state'); 
   var state = $(this).attr("data-state");
 
   console.log(state);
+
   if ('still'==currentState){   //toggle between states
     $(this).data('state','moving');
     $(this).attr('src',$(this).data('animate'));
@@ -122,8 +111,10 @@ function toggleGifs() {
 };
 
 
-
 // ---end function to toggle images
+
+//two functions were wrapped around click events when dynamically created
+//items are being clicked.  This works and the other way doesn't
 //
 $(document).on("click",".animals", displayGifs);
 $(document).on("click",".gif", toggleGifs);
