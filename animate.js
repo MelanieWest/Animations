@@ -58,11 +58,11 @@ $(document).ready(function(){
         console.log("you clicked a button");
 
 
-        var animalTag = '&tag='+ clickedAnimal;
-        var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC" +animalTag  
-         console.log(clickedAnimal, animalTag);
+ //       var animalTag = '&tag='+ clickedAnimal;
 
-        //var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC&tag=cats"        
+ //       var queryURL = "https://api.giphy.com/v1/gifs/random?&api_key=dc6zaTOxFJmzC" + animalTag;  
+         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + clickedAnimal + "&api_key=dc6zaTOxFJmzC&limit=10" ; 
+          console.log(clickedAnimal);
 
           $.ajax({        
             url: queryURL,
@@ -70,10 +70,12 @@ $(document).ready(function(){
           }).done(function(response) {
             console.log(response);      //'response' is all the info the api has on my animal
          
+            for (var i=0; i<response.data.length; i++){
+
             var animalDiv = $('<div class="gifs">');  //new div for images
-            
-            var imgURL_still = response.data.fixed_width_small_still_url;
-            var imgURL_moving = response.data.fixed_width_small_url;
+              
+            var imgURL_still = response.data[i].images.fixed_width_small_still.url;
+            var imgURL_moving = response.data[i].images.fixed_width_small.url;
             
             var animalImg = $('<img>')
             animalImg.attr("src",imgURL_still);
@@ -82,19 +84,13 @@ $(document).ready(function(){
             animalImg.attr("data-animate",imgURL_moving);
             animalImg.attr("class","gif");
             
-            //console.log($(animalImg).html());
+            console.log(i);
 
             animalDiv.prepend(animalImg);  //put into dynamically created div
 
-            // $('#animal-gifs').prepend(animalDiv);  //add to front rather than back of hard-coded div
-            
-            // var imgURL_moving = response.data.fixed_width_small_url;
-            // var animalImg2 = $('<img>')
-            // animalImg2.attr("src",imgURL_still);
-            // animalDiv.prepend(animalImg2);
-
+  
             $('#animal-gifs').prepend(animalDiv);  //add to front rather than back
-            
+            }
           });       //end of response to ajax request
 
     }   //end of button click event/ function
